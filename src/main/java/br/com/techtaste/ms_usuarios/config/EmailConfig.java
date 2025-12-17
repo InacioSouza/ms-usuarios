@@ -28,7 +28,6 @@ public class EmailConfig {
 
     @RabbitListener(queues = "fila.mensagem.usuario")
     private void enviaEmail(@Payload EmailDto mensagem){
-        System.out.println(mensagem);
         this.service.enviarMensagem(mensagem);
     }
 
