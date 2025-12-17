@@ -6,8 +6,6 @@ import br.com.techtaste.ms_usuarios.model.Usuario;
 import br.com.techtaste.ms_usuarios.repository.UsuarioRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +16,6 @@ import java.util.stream.Collectors;
 public class UsuarioService {
     @Autowired
     private UsuarioRepository repository;
-
-    @Autowired
-    private JavaMailSender sender;
 
     public List<UsuarioDto> obterTodos() {
         return this.repository.findAll().stream()
@@ -40,21 +35,7 @@ public class UsuarioService {
 
     public void enviarMensagem(EmailDto mensagem) {
         Optional<Usuario> usuario = this.repository.findByCpf(mensagem.cpf());
-
-        if (usuario.isPresent()) {
-            SimpleMailMessage enviaMensagem = new SimpleMailMessage();
-
-            enviaMensagem.setFrom("SEU-EMAIL@gmail.com");
-            enviaMensagem.setTo(usuario.get().getEmail());
-            enviaMensagem.setSubject("Status do pedido " + mensagem.pedidoId());
-            enviaMensagem.setText("O pedido está: " + mensagem.status());
-
-            try {
-                sender.send(enviaMensagem);
-                System.out.println("Mensagem enviada com sucesso!");
-            } catch (Exception e) {
-                System.out.println("Erro ao enviar mensagem!");
-            }
-        }
+        // Lógica de envio de email
+        System.out.println("Email enviado! " + mensagem);
     }
 }

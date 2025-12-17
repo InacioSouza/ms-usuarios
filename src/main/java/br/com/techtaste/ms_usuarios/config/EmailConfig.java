@@ -29,7 +29,7 @@ public class EmailConfig {
     @RabbitListener(queues = "fila.mensagem.usuario")
     private void enviaEmail(@Payload EmailDto mensagem){
         System.out.println(mensagem);
-        service.enviarMensagem(mensagem);
+        this.service.enviarMensagem(mensagem);
     }
 
     @Bean
@@ -37,6 +37,5 @@ public class EmailConfig {
         ObjectMapper objectMapper = new ObjectMapper();
         return new Jackson2JsonMessageConverter(objectMapper);
     }
-
 
 }
